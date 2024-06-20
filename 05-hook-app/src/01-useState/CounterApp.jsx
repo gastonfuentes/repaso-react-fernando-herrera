@@ -8,7 +8,6 @@ export const CounterApp = () => {
         counter3: 30
     })
 
-
     return (
         <>
 
