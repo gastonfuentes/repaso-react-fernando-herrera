@@ -6,12 +6,13 @@ import './index.css'
 /* import { CounterWhithCustomHook } from './01-useState/CounterWhithCustomHook.jsx' */
 /* import { SimpleForm } from './02-useEffect/SimpleForm.jsx' */
 /* import { FormWithCustomHook } from './02-useEffect/FormWithCustomHook.jsx' */
+/* import { MultipleCustomHooks } from './03-examples/MultipleCustomHooks.jsx' */
 
 
-import { MultipleCustomHooks } from './03-examples/MultipleCustomHooks.jsx'
+import { FocusScreen } from './04-useRef/FocusScreen.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   //<React.StrictMode>   
-  <MultipleCustomHooks />
+  <FocusScreen />
   //</React.StrictMode>,
 )
