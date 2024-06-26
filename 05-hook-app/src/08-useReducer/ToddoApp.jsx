@@ -1,22 +1,48 @@
-import { useReducer } from "react"
+import { useEffect, useReducer } from "react"
 import { todoReducer } from "./todoReducer"
+import { TodoList } from "./TodoList"
+import { TodoAdd } from "./TodoAdd"
 
 const initialState = [
-    {
-        id: new Date().getTime(),
-        description: 'planear viaje a bs as',
-        done: false,
-    },
-    {
-        id: new Date().getTime() * 3,
-        description: 'parchar la bicicleta',
-        done: false,
-    }
+    /*  {
+         id: new Date().getTime(),
+         description: 'planear viaje a bs as',
+         done: false,
+     }, */
 ]
+
+const init = () => {
+    return JSON.parse(localStorage.getItem('todos')) || [];
+}
 
 export const ToddoApp = () => {
 
-    const [todos, dispatch] = useReducer(todoReducer, initialState)
+    const [todos, dispatch] = useReducer(todoReducer, initialState, init)
+
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }, [todos])
+
+
+
+    const onNewTodo = (todo) => {
+        const action = {
+            type: 'ADDTODO',
+            payload: todo
+        }
+
+        dispatch(action)
+    }
+
+    const deleteTodo = (id) => {
+        const action = {
+            type: 'DELETETODO',
+            payload: id
+        }
+
+        dispatch(action)
+    }
 
 
     return (
@@ -26,30 +52,16 @@ export const ToddoApp = () => {
 
             <div className="row">
                 <div className="col-7">
-                    <ul className="list-group">
-                        {todos.map(t => (
-                            <li key={t.id} className="list-group-item d-flex justify-content-between">
-                                <span className="align-self-center">Item 1</span>
-                                <button className="btn btn-danger">Borrar</button>
-                            </li>
 
-                        ))}
-                    </ul>
+                    <TodoList todos={todos} deleteTodo={deleteTodo} />
+
                 </div>
                 <div className="col-5">
                     <h4>Agregar todo</h4>
                     <hr />
-                    <form >
-                        <input
-                            type="text"
-                            placeholder="que hay que hacer"
-                            className="form-control"
-                        />
-                        <button
-                            type="submit"
-                            className="btn btn-outline-primary mt-1"
-                        >Agregar</button>
-                    </form>
+
+                    <TodoAdd onNewTodo={onNewTodo} />
+
                 </div>
             </div>
 
