@@ -1,59 +1,69 @@
-import { useEffect, useReducer } from "react"
-import { todoReducer } from "./todoReducer"
+/* import { useEffect, useReducer } from "react"
+import { todoReducer } from "./todoReducer" */
 import { TodoList } from "./TodoList"
 import { TodoAdd } from "./TodoAdd"
+import { useTodos } from "../hooks/useTodos"
 
-const initialState = [
-    /*  {
-         id: new Date().getTime(),
-         description: 'planear viaje a bs as',
-         done: false,
-     }, */
-]
+/* const initialState = [
+    
+] */
 
-const init = () => {
+/* const init = () => {
     return JSON.parse(localStorage.getItem('todos')) || [];
 }
-
+ */
 export const ToddoApp = () => {
 
-    const [todos, dispatch] = useReducer(todoReducer, initialState, init)
+    /* const [todos, dispatch] = useReducer(todoReducer, initialState, init) */
 
 
-    useEffect(() => {
+    /* useEffect(() => {
         localStorage.setItem('todos', JSON.stringify(todos))
-    }, [todos])
+    }, [todos]) */
 
 
 
-    const onNewTodo = (todo) => {
-        const action = {
-            type: 'ADDTODO',
-            payload: todo
-        }
+    /*  const onNewTodo = (todo) => {
+         const action = {
+             type: 'ADDTODO',
+             payload: todo
+         }
+ 
+         dispatch(action)
+     } */
 
-        dispatch(action)
-    }
+    /*   const deleteTodo = (id) => {
+          const action = {
+              type: 'DELETETODO',
+              payload: id
+          }
+  
+          dispatch(action)
+      } */
 
-    const deleteTodo = (id) => {
-        const action = {
-            type: 'DELETETODO',
-            payload: id
-        }
+    /*  const togleTodo = (id) => {
+         const action = {
+             type: 'TOGLETODO',
+             payload: id
+         }
+ 
+         dispatch(action)
+     } */
 
-        dispatch(action)
-    }
+
+    //se creo hook personalizado useTodos con toda la logica que esta comentada arriba    
+    const { deleteTodo, onNewTodo, todos, togleTodo } = useTodos()
 
 
     return (
         <>
-            <h1>ToddoApp: 10, <small>pendientes: 2</small></h1>
+            <h1>ToddoApp: {todos.length}, <small>pendientes: {todos.filter(todo => todo.done === false).length}</small></h1>
             <hr />
 
             <div className="row">
                 <div className="col-7">
 
-                    <TodoList todos={todos} deleteTodo={deleteTodo} />
+                    <TodoList todos={todos} deleteTodo={deleteTodo} togleTodo={togleTodo} />
 
                 </div>
                 <div className="col-5">
